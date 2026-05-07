@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-frontend
+  namespace: demo-app
+  labels:
+    app: demo-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-frontend
+  template:
+    metadata:
+      labels:
+        app: demo-frontend
+    spec:
+      containers:
+        - name: demo-frontend
+          image: ghcr.io/codedrifter-mx/myawesomeapp/demo-frontend:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NEXT_PUBLIC_AUTH_URL
+              value: "http://auth-service:3001"
+            - name: NEXT_PUBLIC_LIVEOPS_URL
+              value: "http://liveops-backend:4000"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+        - name: health-monitor
+          image: ghcr.io/codedrifter-mx/myawesomeapp/health-monitor:latest
+          env:
+            - name: AUTH_HEALTH_URL
+              value: "http://auth-service:3001/health"
+            - name: LIVEOPS_EVENTS_URL
+              value: "http://liveops-backend:4000/api/events"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
