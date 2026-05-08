@@ -1,4 +1,4 @@
-const AUTH_HEALTH_URL = process.env.AUTH_HEALTH_URL || 'http://auth-service:3001/health';
+const AUTH_HEALTH_URL = process.env.AUTH_HEALTH_URL || 'http://keycloak:8080/health/ready';
 const LIVEOPS_EVENTS_URL = process.env.LIVEOPS_EVENTS_URL || 'http://liveops-backend:4000/api/events';
 const POLL_INTERVAL_MS = 5000;
 const FAILURE_THRESHOLD = 3;
@@ -43,10 +43,10 @@ async function monitor(): Promise<void> {
       if (isDown && consecutiveSuccesses >= FAILURE_THRESHOLD) {
         isDown = false;
         consecutiveSuccesses = 0;
-        console.log('Auth service recovered!');
+        console.log('Keycloak recovered!');
         await pushEvent({
           type: 'recovery',
-          service: 'auth-microservice',
+          service: 'keycloak',
           status: 'healthy',
           timestamp: new Date().toISOString(),
         });
@@ -57,10 +57,10 @@ async function monitor(): Promise<void> {
 
       if (!isDown && consecutiveFailures >= FAILURE_THRESHOLD) {
         isDown = true;
-        console.log('Auth service is down!');
+        console.log('Keycloak is down!');
         await pushEvent({
           type: 'incident',
-          service: 'auth-microservice',
+          service: 'keycloak',
           status: 'down',
           errorRate: '100%',
           impactedUsers: 15,
