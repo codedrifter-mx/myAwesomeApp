@@ -4,36 +4,20 @@ metadata:
   name: keycloak-ingress
   namespace: demo-app
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   rules:
-    - http:
+    - host: auth.<DOMAIN>
+      http:
         paths:
-          - path: /realms
+          - path: /
             pathType: Prefix
             backend:
               service:
                 name: keycloak
                 port:
                   number: 8080
-          - path: /resources
-            pathType: Prefix
-            backend:
-              service:
-                name: keycloak
-                port:
-                  number: 8080
-          - path: /admin
-            pathType: Prefix
-            backend:
-              service:
-                name: keycloak
-                port:
-                  number: 8080
-          - path: /health
-            pathType: Prefix
-            backend:
-              service:
-                name: keycloak
-                port:
-                  number: 8080
+  tls:
+    - hosts:
+        - auth.<DOMAIN>
+      secretName: demo-app-tls
