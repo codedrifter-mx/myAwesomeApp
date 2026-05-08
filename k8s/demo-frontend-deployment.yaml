@@ -21,8 +21,16 @@ spec:
           ports:
             - containerPort: 3000
           env:
-            - name: NEXT_PUBLIC_AUTH_URL
-              value: "http://auth-service:3001"
+            - name: NEXT_PUBLIC_KEYCLOAK_URL
+              value: "http://keycloak:8080"
+            - name: NEXT_PUBLIC_KEYCLOAK_REALM
+              value: "myawesomeapp"
+            - name: NEXT_PUBLIC_KEYCLOAK_CLIENT_ID
+              value: "myawesomeapp-frontend"
+            - name: NEXT_PUBLIC_REDIRECT_URI
+              value: "http://demo-frontend/dashboard"
+            - name: NEXT_PUBLIC_FRONTEND_URL
+              value: "http://demo-frontend"
             - name: NEXT_PUBLIC_LIVEOPS_URL
               value: "http://liveops-backend:4000"
           resources:
@@ -36,7 +44,7 @@ spec:
           image: ghcr.io/codedrifter-mx/myawesomeapp/health-monitor:latest
           env:
             - name: AUTH_HEALTH_URL
-              value: "http://auth-service:3001/health"
+              value: "http://keycloak:8080/health/ready"
             - name: LIVEOPS_EVENTS_URL
               value: "http://liveops-backend:4000/api/events"
           resources:
