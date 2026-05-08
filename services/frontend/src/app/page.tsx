@@ -134,8 +134,9 @@ export default function HomePage() {
           font-size: clamp(24px, 3.5vw, 36px); line-height: 1.2; color: #000;
           margin-bottom: 32px;
         }
-        .pull-quote::before {
-          content: '\u201C'; display: block; font-size: 60px; color: #ccc; line-height: 0.5; margin-bottom: 12px;
+        .pull-quote { position: relative; }
+        .pull-quote-icon {
+          display: block; font-size: 60px; color: #ccc; line-height: 0.5; margin-bottom: 12px;
         }
         .author-info { display: flex; align-items: center; justify-content: center; gap: 12px; }
         .author-avatar {
@@ -228,7 +229,7 @@ export default function HomePage() {
       {/* === TESTIMONIAL === */}
       <section className="testimonial-section">
         <div className="testimonial-card">
-          <p className="pull-quote">Since moving to myAwesomeApp, we&rsquo;ve completely eliminated billing support tickets. It just works quietly in the background.</p>
+          <p className="pull-quote"><span className="pull-quote-icon">&ldquo;</span>Since moving to myAwesomeApp, we&rsquo;ve completely eliminated billing support tickets. It just works quietly in the background.</p>
           <div className="author-info">
             <div className="author-avatar">JD</div>
             <div className="author-text" style={{ textAlign: 'left' }}>
