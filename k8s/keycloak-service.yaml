@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
+  name: keycloak
   namespace: demo-app
 spec:
   selector:
-    app: auth-service
+    app: keycloak
   ports:
-    - port: 3001
-      targetPort: 3001
+    - port: 8080
+      targetPort: 8080
   type: ClusterIP

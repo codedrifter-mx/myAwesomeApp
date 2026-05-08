@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keycloak-realm-config
+  namespace: demo-app
+data:
+  realm-export.json: |
+    {
+      "realm": "myawesomeapp",
+      "enabled": true,
+      "sslRequired": "none",
+      "registrationAllowed": true,
+      "loginWithEmailAllowed": true,
+      "duplicateEmailsAllowed": false,
+      "resetPasswordAllowed": false,
+      "editUsernameAllowed": false,
+      "bruteForceProtected": false,
+      "permanentLockout": false,
+      "maxFailureWaitSeconds": 900,
+      "minimumQuickLoginWaitSeconds": 60,
+      "waitIncrementSeconds": 60,
+      "quickLoginCheckMilliSeconds": 1000,
+      "maxDeltaTimeSeconds": 43200,
+      "failureFactor": 30,
+      "defaultRole": {
+        "name": "default-roles-myawesomeapp",
+        "description": "${role_default-roles}",
+        "composite": true,
+        "clientRole": false
+      },
+      "requiredCredentials": ["password"],
+      "otpPolicyType": "totp",
+      "otpPolicyAlgorithm": "HmacSHA1",
+      "otpPolicyInitialCounter": 0,
+      "otpPolicyDigits": 6,
+      "otpPolicyLookAheadWindow": 1,
+      "otpPolicyPeriod": 30,
+      "clients": [
+        {
+          "clientId": "myawesomeapp-frontend",
+          "enabled": true,
+          "publicClient": true,
+          "standardFlowEnabled": true,
+          "implicitFlowEnabled": true,
+          "directAccessGrantsEnabled": false,
+          "redirectUris": [
+            "http://localhost:3000/dashboard*",
+            "http://localhost:3000/*",
+            "http://demo-frontend/dashboard*",
+            "http://demo-frontend/*"
+          ],
+          "webOrigins": ["http://localhost:3000", "+"],
+          "attributes": {
+            "pkce.code.challenge.method": "S256"
+          },
+          "fullScopeAllowed": true
+        }
+      ],
+      "users": [
+        {
+          "username": "demo",
+          "enabled": true,
+          "email": "demo@myawesomeapp.dev",
+          "firstName": "Demo",
+          "lastName": "User",
+          "credentials": [
+            {
+              "type": "password",
+              "value": "demo",
+              "temporary": false
+            }
+          ],
+          "realmRoles": ["default-roles-myawesomeapp"]
+        }
+      ]
+    }
