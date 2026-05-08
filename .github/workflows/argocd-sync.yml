@@ -1,0 +1,24 @@
+name: Trigger ArgoCD Sync
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'k8s/**'
+      - 'keycloak/**'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Notify ArgoCD
+        run: |
+          echo "Push to main detected with k8s/keycloak changes."
+          echo "ArgoCD auto-sync is enabled (poll every 3 minutes)."
+          echo "No manual trigger needed — ArgoCD will detect and deploy."
+          echo ""
+          echo "To force an immediate sync, run:"
+          echo "  argocd app sync demo-app"
