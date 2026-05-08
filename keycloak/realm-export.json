@@ -1,7 +1,7 @@
 {
   "realm": "myawesomeapp",
   "enabled": true,
-  "sslRequired": "none",
+  "sslRequired": "external",
   "registrationAllowed": true,
   "loginWithEmailAllowed": true,
   "duplicateEmailsAllowed": false,
@@ -37,18 +37,16 @@
       "implicitFlowEnabled": true,
       "directAccessGrantsEnabled": false,
       "redirectUris": [
-        "http://localhost:3000/dashboard*",
-        "http://localhost:3000/*",
-        "http://demo-frontend/dashboard*",
-        "http://demo-frontend/*"
+        "https://app.<DOMAIN>/dashboard*",
+        "https://app.<DOMAIN>/*"
       ],
       "webOrigins": [
-        "http://localhost:3000",
+        "https://app.<DOMAIN>",
         "+"
       ],
       "attributes": {
         "pkce.code.challenge.method": "S256",
-        "post.logout.redirect.uris": "http://localhost:3000/*"
+        "post.logout.redirect.uris": "https://app.<DOMAIN>/*"
       },
       "fullScopeAllowed": true
     }
