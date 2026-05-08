@@ -1,14 +1,17 @@
 @echo off
-echo ============================================
-echo   myAwesomeApp - Local Development Start
-echo ============================================
-echo.
+setlocal
+where wsl >nul 2>&1
+if %ERRORLEVEL% NEQ 0 (
+    echo WSL not found. Please install WSL first.
+    pause
+    exit /b 1
+)
 
-echo Starting Keycloak on port 8080...
-docker run -d --name keycloak -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin -v "%~dp0keycloak\realm-export.json:/opt/keycloak/data/import/realm-export.json" quay.io/keycloak/keycloak:26.0 start-dev --import-realm
+echo Starting Keycloak on port 8080 via WSL...
+wsl docker run -d --name keycloak -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin -v "/mnt/c/Users/Kazuk/projects/myAwesomeApp/keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json" quay.io/keycloak/keycloak:25.0 start-dev --import-realm
 
-echo Waiting for Keycloak to start (30 seconds)...
-timeout /t 30 /nobreak >nul
+echo Waiting for Keycloak to start (40 seconds)...
+timeout /t 40 /nobreak >nul
 
 echo Starting Frontend on port 3000...
 start "Frontend" cmd /k "cd /d %~dp0services\frontend && npm run dev"
@@ -30,8 +33,6 @@ echo.
 echo   Demo credentials: demo / demo
 echo.
 echo   Open http://localhost:3000 in your browser
-echo.
-echo   Close the terminal windows to stop
-echo   Run stop.bat to stop Keycloak container
+echo   Run stop.bat to stop
 echo ============================================
 pause
