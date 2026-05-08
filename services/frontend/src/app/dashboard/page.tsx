@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getStoredToken, fetchUserInfo, clearToken, type UserInfo } from '@/lib/auth';
+import { getStoredToken, fetchUserInfo, clearToken, getKeycloakLogoutUrl, type UserInfo } from '@/lib/auth';
 
 export default function DashboardPage() {
   const [user, setUser] = useState<UserInfo | null>(null);
   const [killStatus, setKillStatus] = useState<string>('');
   const [authHealthy, setAuthHealthy] = useState<boolean>(true);
 
-  const authUrl = process.env.NEXT_PUBLIC_AUTH_URL || 'http://localhost:3001';
+  const keycloakUrl = process.env.NEXT_PUBLIC_KEYCLOAK_URL || 'http://localhost:8080';
   const liveopsUrl = process.env.NEXT_PUBLIC_LIVEOPS_URL || 'http://localhost:4000';
 
   useEffect(() => {
@@ -17,33 +17,38 @@ export default function DashboardPage() {
       window.location.href = '/';
       return;
     }
-    fetchUserInfo(token, authUrl).then((u) => {
+    fetchUserInfo(token).then((u) => {
       if (u) setUser(u);
       else clearToken();
     });
-  }, [authUrl]);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const res = await fetch(`${authUrl}/health`);
+        const res = await fetch(`${keycloakUrl}/health/ready`);
         setAuthHealthy(res.ok);
       } catch {
         setAuthHealthy(false);
       }
     }, 5000);
     return () => clearInterval(interval);
-  }, [authUrl]);
+  }, [keycloakUrl]);
 
   const handleKillAuth = async () => {
-    setKillStatus('Killing auth service...');
+    setKillStatus('Killing Keycloak...');
     try {
       const res = await fetch(`${liveopsUrl}/api/kill-auth`, { method: 'POST' });
       const data = await res.json();
-      setKillStatus(data.message || 'Auth service kill signal sent');
+      setKillStatus(data.message || 'Keycloak kill signal sent');
     } catch {
       setKillStatus('Failed to reach LiveOps backend. Is it running?');
     }
+  };
+
+  const handleLogout = () => {
+    clearToken();
+    window.location.href = getKeycloakLogoutUrl();
   };
 
   return (
@@ -51,7 +56,7 @@ export default function DashboardPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <h1>Dashboard</h1>
         <button
-          onClick={() => { clearToken(); window.location.href = '/'; }}
+          onClick={handleLogout}
           style={{ padding: '0.5rem 1rem', background: '#333', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
         >
           Sign Out
@@ -61,7 +66,7 @@ export default function DashboardPage() {
       {user && (
         <div style={{ background: '#1a1a2e', padding: '1.5rem', borderRadius: '8px', marginBottom: '2rem' }}>
           <h2 style={{ margin: '0 0 0.5rem' }}>Welcome, {user.name}</h2>
-          <p style={{ color: '#888', margin: 0 }}>{user.email} &middot; {user.role}</p>
+          <p style={{ color: '#888', margin: 0 }}>{user.email} &middot; {user.preferred_username}</p>
         </div>
       )}
 
@@ -73,13 +78,13 @@ export default function DashboardPage() {
             background: authHealthy ? '#48bb78' : '#f56565',
             display: 'inline-block',
           }} />
-          <span>Auth Microservice — {authHealthy ? 'Healthy' : 'Down'}</span>
+          <span>Keycloak Identity Provider — {authHealthy ? 'Healthy' : 'Down'}</span>
         </div>
       </div>
 
       <div style={{ background: '#2d1b1b', padding: '1.5rem', borderRadius: '8px', border: '1px solid #f56565' }}>
         <h3 style={{ color: '#f56565', marginTop: 0 }}>Danger Zone</h3>
-        <p>Click below to kill the auth service pod. This will trigger the LiveOps incident response pipeline.</p>
+        <p>Click below to kill the Keycloak pod. This will trigger the LiveOps incident response pipeline.</p>
         <button
           onClick={handleKillAuth}
           style={{
@@ -93,7 +98,7 @@ export default function DashboardPage() {
             fontSize: '1rem',
           }}
         >
-          Kill Auth Service
+          Kill Keycloak
         </button>
         {killStatus && <p style={{ marginTop: '1rem', color: '#fc8181' }}>{killStatus}</p>}
       </div>
