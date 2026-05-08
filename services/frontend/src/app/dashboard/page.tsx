@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getStoredToken, fetchUserInfo, clearToken, getKeycloakLogoutUrl, type UserInfo } from '@/lib/auth';
+import { getStoredToken, getTokenFromHash, storeToken, fetchUserInfo, clearToken, getKeycloakLogoutUrl, type UserInfo } from '@/lib/auth';
 
 export default function DashboardPage() {
   const [user, setUser] = useState<UserInfo | null>(null);
@@ -12,11 +12,19 @@ export default function DashboardPage() {
   const liveopsUrl = process.env.NEXT_PUBLIC_LIVEOPS_URL || 'http://localhost:4000';
 
   useEffect(() => {
-    const token = getStoredToken();
+    let token = getStoredToken();
+
     if (!token) {
-      window.location.href = '/';
-      return;
+      token = getTokenFromHash();
+      if (token) {
+        storeToken(token);
+        window.location.hash = '';
+      } else {
+        window.location.href = '/';
+        return;
+      }
     }
+
     fetchUserInfo(token).then((u) => {
       if (u) setUser(u);
       else clearToken();
