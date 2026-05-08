@@ -2,12 +2,12 @@
 set -euo pipefail
 
 # ============================================================
-# myAwesomeApp - Oracle Cloud Production Setup
-# Run this on a fresh Ubuntu 22.04 Oracle Cloud ARM instance
+# myAwesomeApp - Hetzner Cloud Production Setup
+# Run this on a fresh Ubuntu 24.04 Hetzner CX32 instance
 # ============================================================
 
 echo "============================================"
-echo "  myAwesomeApp Oracle Cloud Setup"
+echo "  myAwesomeApp Hetzner Cloud Setup"
 echo "============================================"
 
 # --- Configuration ---
@@ -28,9 +28,9 @@ echo ""
 
 # --- Step 1: System updates ---
 echo ">>> Updating system packages..."
-sudo apt-get update -qq
-sudo apt-get upgrade -y -qq
-sudo apt-get install -y -qq curl git openssl
+apt-get update -qq
+apt-get upgrade -y -qq
+apt-get install -y -qq curl git openssl
 
 # --- Step 2: Install k3s ---
 echo ">>> Installing k3s..."
@@ -44,18 +44,16 @@ curl -sfL https://get.k3s.io | \
 
 echo ">>> Waiting for k3s to be ready..."
 sleep 10
-sudo k3s kubectl wait --for=condition=Ready node --all --timeout=120s
+k3s kubectl wait --for=condition=Ready node --all --timeout=120s
 
 # --- Step 3: Create symlink for kubectl ---
 mkdir -p "$HOME/.kube"
-sudo cp /etc/rancher/k3s/k3s.yaml "$HOME/.kube/config"
-sudo chown "$USER:$USER" "$HOME/.kube/config"
+cp /etc/rancher/k3s/k3s.yaml "$HOME/.kube/config"
 chmod 600 "$HOME/.kube/config"
 
 export KUBECONFIG="$HOME/.kube/config"
 echo "export KUBECONFIG=\$HOME/.kube/config" >> "$HOME/.bashrc"
 
-# Verify
 kubectl get nodes
 
 # --- Step 4: Generate wildcard self-signed TLS certificate ---
@@ -84,10 +82,7 @@ echo ">>> Cloning repository..."
 TMP_DIR=$(mktemp -d)
 git clone "$GITHUB_REPO" "$TMP_DIR"
 cd "$TMP_DIR"
-
-BRANCH="feat/demo-app-implementation"
-echo ">>> Checking out branch: $BRANCH"
-git checkout "$BRANCH" 2>/dev/null || git checkout main
+git checkout main
 
 echo ">>> Substituting <DOMAIN> with $DOMAIN in k8s manifests..."
 find k8s/ -type f -name "*.yaml" -exec sed -i "s/<DOMAIN>/$DOMAIN/g" {} \;
