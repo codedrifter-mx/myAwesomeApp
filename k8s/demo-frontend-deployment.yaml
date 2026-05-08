@@ -22,17 +22,18 @@ spec:
             - containerPort: 3000
           env:
             - name: NEXT_PUBLIC_KEYCLOAK_URL
-              value: "http://keycloak:8080"
+              value: "https://auth.<DOMAIN>"
             - name: NEXT_PUBLIC_KEYCLOAK_REALM
               value: "myawesomeapp"
             - name: NEXT_PUBLIC_KEYCLOAK_CLIENT_ID
               value: "myawesomeapp-frontend"
             - name: NEXT_PUBLIC_REDIRECT_URI
-              value: "http://demo-frontend/dashboard"
+              value: "https://app.<DOMAIN>/dashboard"
             - name: NEXT_PUBLIC_FRONTEND_URL
-              value: "http://demo-frontend"
+              value: "https://app.<DOMAIN>"
             - name: NEXT_PUBLIC_LIVEOPS_URL
               value: "http://liveops-backend:4000"
+          imagePullPolicy: Always
           resources:
             requests:
               cpu: 100m
@@ -47,6 +48,7 @@ spec:
               value: "http://keycloak:8080/health/ready"
             - name: LIVEOPS_EVENTS_URL
               value: "http://liveops-backend:4000/api/events"
+          imagePullPolicy: Always
           resources:
             requests:
               cpu: 50m
