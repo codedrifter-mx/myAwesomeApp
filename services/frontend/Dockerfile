@@ -7,7 +7,11 @@ RUN npm install
 
 COPY . .
 
-ENV NEXT_PUBLIC_AUTH_URL=http://auth-service:3001
+ENV NEXT_PUBLIC_KEYCLOAK_URL=http://keycloak:8080
+ENV NEXT_PUBLIC_KEYCLOAK_REALM=myawesomeapp
+ENV NEXT_PUBLIC_KEYCLOAK_CLIENT_ID=myawesomeapp-frontend
+ENV NEXT_PUBLIC_REDIRECT_URI=http://demo-frontend/dashboard
+ENV NEXT_PUBLIC_FRONTEND_URL=http://demo-frontend
 ENV NEXT_PUBLIC_LIVEOPS_URL=http://liveops-backend:4000
 
 RUN npm run build
@@ -17,7 +21,11 @@ FROM node:20-slim AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV NEXT_PUBLIC_AUTH_URL=http://auth-service:3001
+ENV NEXT_PUBLIC_KEYCLOAK_URL=http://keycloak:8080
+ENV NEXT_PUBLIC_KEYCLOAK_REALM=myawesomeapp
+ENV NEXT_PUBLIC_KEYCLOAK_CLIENT_ID=myawesomeapp-frontend
+ENV NEXT_PUBLIC_REDIRECT_URI=http://demo-frontend/dashboard
+ENV NEXT_PUBLIC_FRONTEND_URL=http://demo-frontend
 ENV NEXT_PUBLIC_LIVEOPS_URL=http://liveops-backend:4000
 
 COPY --from=builder /app/.next/standalone ./
