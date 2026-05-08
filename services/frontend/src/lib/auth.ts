@@ -34,6 +34,49 @@ export async function fetchUserInfo(token: string): Promise<UserInfo | null> {
   }
 }
 
+export async function getAdminToken(): Promise<string | null> {
+  const keycloakUrl = process.env.NEXT_PUBLIC_KEYCLOAK_URL || 'http://localhost:8080';
+  try {
+    const res = await fetch(`${keycloakUrl}/realms/master/protocol/openid-connect/token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        client_id: 'admin-cli',
+        username: 'admin',
+        password: 'admin',
+        grant_type: 'password',
+      }),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.access_token;
+  } catch {
+    return null;
+  }
+}
+
+export async function updateUserProfile(
+  adminToken: string,
+  userId: string,
+  updates: { firstName?: string; lastName?: string; email?: string }
+): Promise<boolean> {
+  const keycloakUrl = process.env.NEXT_PUBLIC_KEYCLOAK_URL || 'http://localhost:8080';
+  const realm = process.env.NEXT_PUBLIC_KEYCLOAK_REALM || 'myawesomeapp';
+  try {
+    const res = await fetch(`${keycloakUrl}/admin/realms/${realm}/users/${userId}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${adminToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updates),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
 export function clearToken(): void {
   if (typeof window === 'undefined') return;
   window.location.hash = '';
