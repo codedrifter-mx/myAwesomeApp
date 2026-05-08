@@ -145,6 +145,11 @@ docker build -t health-monitor:local .
 - Make sure the frontend dev server is running on port 3000
 - Check `http://localhost:3000` returns HTML
 
+### "404 on page reload or static chunks"
+- Delete the `.next` cache: `rm -rf services/frontend/.next` (Linux/Mac) or `Remove-Item -Recurse -Force services/frontend/.next` (PowerShell)
+- Restart the frontend dev server
+- This happens occasionally when the Next.js dev cache gets corrupted
+
 ### OAuth redirect not working
 - The auth service must be running on port 3001 before clicking "Sign In"
 - The redirect URI must match what the frontend expects (`http://localhost:3000/dashboard`)
