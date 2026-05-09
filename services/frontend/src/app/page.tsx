@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import FrostedContent from '@/components/FrostedContent';
 
 const VantaBackground = dynamic(() => import('@/components/VantaBackground'), { ssr: false });
 
@@ -66,18 +67,12 @@ export default function HomePage() {
           position: relative; z-index: 10; flex: 1;
           display: flex; flex-direction: column; align-items: center; justify-content: center;
           padding: 0 24px; text-align: center;
-          backdrop-filter: blur(6px);
-          -webkit-backdrop-filter: blur(6px);
-          background: rgba(0,0,0,0.12);
         }
 
         /* Nav */
         .nav {
           position: relative; z-index: 20; width: 100%;
           padding: 24px 40px; display: flex; justify-content: space-between; align-items: center;
-          backdrop-filter: blur(6px);
-          -webkit-backdrop-filter: blur(6px);
-          background: rgba(0,0,0,0.12);
         }
         .logo { font-size: 24px; font-weight: 500; letter-spacing: -0.05em; color: #fff; }
         .nav-links { display: flex; gap: 32px; font-size: 14px; }
@@ -177,15 +172,15 @@ export default function HomePage() {
         </div>
         <div className="hero-grid" />
 
-        <nav className="nav">
+        <FrostedContent className="nav">
           <div className="logo">myAwesomeApp</div>
           <div className="nav-links">
             <a href="#features">Features</a>
             <a href={loginUrl}>Log in</a>
           </div>
-        </nav>
+        </FrostedContent>
 
-        <div className="hero-content-wrapper">
+        <FrostedContent className="hero-content-wrapper">
           <div className="text-glow" />
           <h1 className="hero-headline">Manage subscriptions effortlessly.</h1>
           <p className="hero-deck">The enterprise-grade platform to scale your billing, reduce churn, and automate revenue operations.</p>
@@ -204,7 +199,7 @@ export default function HomePage() {
           </div>
 
           <p className="demo-hint">Demo: demo / demo</p>
-        </div>
+        </FrostedContent>
       </section>
 
       {/* === FEATURES === */}
