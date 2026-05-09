@@ -143,6 +143,19 @@ body {
   color: rgba(255, 255, 255, 0.25) !important;
 }
 
+input {
+  color-scheme: dark;
+}
+
+.pf-c-form-control:-webkit-autofill,
+.pf-c-form-control:-webkit-autofill:hover,
+.pf-c-form-control:-webkit-autofill:focus,
+.pf-c-form-control:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--input-bg) inset !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  caret-color: var(--text-primary);
+}
+
 /* ---- Password input group ---- */
 .pf-c-input-group {
   display: flex;
