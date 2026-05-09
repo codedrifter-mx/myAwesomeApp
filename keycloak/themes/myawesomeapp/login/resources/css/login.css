@@ -185,6 +185,12 @@ body.login-pf {
   background: var(--accent-hover) !important;
 }
 
+.pf-v5-c-button[type="submit"]:focus-visible,
+.pf-v5-c-button.pf-m-primary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* Secondary button (used on logout page) */
 .pf-v5-c-button.pf-m-secondary {
   background: transparent !important;
@@ -204,6 +210,11 @@ body.login-pf {
 .pf-v5-c-button.pf-m-secondary:hover {
   background: rgba(255, 255, 255, 0.05) !important;
   border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.pf-v5-c-button.pf-m-secondary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* Button on the logout page */
