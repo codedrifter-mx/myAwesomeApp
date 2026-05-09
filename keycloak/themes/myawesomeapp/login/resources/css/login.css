@@ -1,10 +1,4 @@
-/* ============================================
-   myAwesomeApp Keycloak Login Theme
-   Dark theme matching app hero/dashboard style
-   ============================================ */
-
 :root {
-  /* Backgrounds */
   --bg-dark: #0a0a0a;
   --card-bg: rgba(255, 255, 255, 0.04);
   --card-border: rgba(255, 255, 255, 0.06);
@@ -12,40 +6,42 @@
   --input-bg: rgba(255, 255, 255, 0.05);
   --input-border: rgba(255, 255, 255, 0.1);
   --input-radius: 8px;
-
-  /* Text */
   --text-primary: #ffffff;
   --text-muted: rgba(255, 255, 255, 0.4);
   --text-link: rgba(255, 255, 255, 0.5);
-
-  /* Accent */
   --accent: #38b2ac;
   --accent-hover: #2d9a94;
   --accent-glow: rgba(56, 178, 172, 0.15);
-
-  /* Feedback */
   --error: #f56565;
   --success: #48bb78;
-
-  /* Typography */
   --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, system-ui, sans-serif;
 }
 
 /* ---- Page layout ---- */
-body.login-pf {
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
   background: var(--bg-dark);
   font-family: var(--font-stack);
   color: var(--text-primary);
+}
+
+.login-pf-page {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  margin: 0;
   padding: 24px;
+  box-sizing: border-box;
 }
 
 /* ---- Header / Brand ---- */
-#kc-header {
+.login-pf-page-header {
   text-align: center;
   margin-bottom: 32px;
 }
@@ -60,112 +56,134 @@ body.login-pf {
   background: none;
 }
 
-/* ---- Content card ---- */
-#kc-content {
+/* ---- Card ---- */
+.card-pf {
   width: 100%;
   max-width: 420px;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--card-radius);
-  padding: 40px;
+  padding: 0;
+  margin: 0;
 }
 
-#kc-content-wrapper {
-  width: 100%;
-}
-
-/* ---- Form title ---- */
-#kc-form-title {
+/* ---- Card header ---- */
+.login-pf-header {
   text-align: center;
+  padding: 40px 40px 0;
+  margin-bottom: 0;
+}
+
+#kc-page-title {
   font-size: 14px;
+  font-weight: 400;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 24px;
+  margin: 0;
 }
 
-/* ---- Form groups ---- */
+/* ---- Content ---- */
+#kc-content {
+  width: 100%;
+}
+
+#kc-content-wrapper {
+  padding: 24px 40px 40px;
+}
+
+/* ---- Form ---- */
 #kc-form {
   width: 100%;
 }
 
-#kc-form > div:not(.pf-v5-c-form):not([class]) {
-  /* PatternFly form wrapper */
+#kc-form-wrapper form {
+  margin: 0;
 }
 
-.login-pf-settings {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 16px 0;
+.form-group {
+  margin-bottom: 20px;
 }
 
-/* ---- Form labels ---- */
-.pf-v5-c-form__label,
+/* ---- Labels ---- */
+.pf-c-form__label,
 #kc-form label {
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  display: block;
-  margin-bottom: 6px;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: var(--text-muted) !important;
+  display: block !important;
+  margin-bottom: 6px !important;
+  padding: 0 !important;
 }
 
-/* ---- Form inputs ---- */
-.pf-v5-c-form-control {
+/* ---- Inputs ---- */
+.pf-c-form-control {
   background: var(--input-bg) !important;
   border: 1px solid var(--input-border) !important;
   border-radius: var(--input-radius) !important;
   color: var(--text-primary) !important;
   font-size: 14px !important;
   padding: 12px 14px !important;
-  font-family: var(--font-stack);
-  width: 100%;
+  font-family: var(--font-stack) !important;
+  width: 100% !important;
+  height: auto !important;
   box-sizing: border-box;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.pf-v5-c-form-control:focus {
+.pf-c-form-control:focus {
   border-color: var(--accent) !important;
   box-shadow: 0 0 0 3px var(--accent-glow) !important;
-  outline: none;
+  outline: none !important;
 }
 
-.pf-v5-c-form-control::placeholder {
-  color: rgba(255, 255, 255, 0.25);
+.pf-c-form-control::placeholder {
+  color: rgba(255, 255, 255, 0.25) !important;
 }
 
-/* Fix PatternFly's default input background override */
-.pf-v5-c-form-control:not(textarea) {
-  background: var(--input-bg) !important;
-}
-
-/* ---- Checkbox ---- */
-.pf-v5-c-check {
+/* ---- Password input group ---- */
+.pf-c-input-group {
   display: flex;
+  border-radius: var(--input-radius);
+  overflow: hidden;
+}
+
+.pf-c-input-group .pf-c-form-control {
+  border-radius: var(--input-radius) 0 0 var(--input-radius) !important;
+  border-right: none !important;
+}
+
+.pf-c-button.pf-m-control {
+  background: var(--input-bg) !important;
+  border: 1px solid var(--input-border) !important;
+  border-left: none !important;
+  border-radius: 0 var(--input-radius) var(--input-radius) 0 !important;
+  color: var(--text-muted) !important;
+  padding: 12px 14px !important;
+  height: auto !important;
+}
+
+.pf-c-button.pf-m-control:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ---- Settings row ---- */
+.login-pf-settings {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  margin: 0;
 }
 
-.pf-v5-c-check__input {
-  accent-color: var(--accent);
-  width: 16px;
-  height: 16px;
-}
-
-.pf-v5-c-check__label {
-  font-size: 13px;
-  color: var(--text-link);
-}
-
-/* ---- Buttons ---- */
-#kc-form-buttons {
+/* ---- Primary button ---- */
+#kc-form-buttons.form-group {
   margin-top: 24px;
+  margin-bottom: 0;
 }
 
-.pf-v5-c-button[type="submit"],
-.pf-v5-c-button.pf-m-primary {
+.pf-c-button.pf-m-primary {
   background: var(--accent) !important;
   color: #fff !important;
   border: none !important;
@@ -173,26 +191,24 @@ body.login-pf {
   padding: 14px 28px !important;
   font-size: 15px !important;
   font-weight: 500 !important;
-  font-family: var(--font-stack);
+  font-family: var(--font-stack) !important;
   cursor: pointer;
   width: 100%;
-  transition: background 0.15s ease;
   line-height: 1.2;
+  transition: background 0.15s ease;
 }
 
-.pf-v5-c-button[type="submit"]:hover,
-.pf-v5-c-button.pf-m-primary:hover {
+.pf-c-button.pf-m-primary:hover {
   background: var(--accent-hover) !important;
 }
 
-.pf-v5-c-button[type="submit"]:focus-visible,
-.pf-v5-c-button.pf-m-primary:focus-visible {
+.pf-c-button.pf-m-primary:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-/* Secondary button (used on logout page) */
-.pf-v5-c-button.pf-m-secondary {
+/* ---- Secondary button (logout page) ---- */
+.pf-c-button.pf-m-secondary {
   background: transparent !important;
   color: #fff !important;
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
@@ -207,38 +223,22 @@ body.login-pf {
   line-height: 1.2;
 }
 
-.pf-v5-c-button.pf-m-secondary:hover {
+.pf-c-button.pf-m-secondary:hover {
   background: rgba(255, 255, 255, 0.05) !important;
   border-color: rgba(255, 255, 255, 0.3) !important;
 }
 
-.pf-v5-c-button.pf-m-secondary:focus-visible {
+.pf-c-button.pf-m-secondary:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-/* Button on the logout page */
-#kc-logout-confirm .pf-v5-c-button {
-  margin-bottom: 12px;
+/* ---- Signup / Register link ---- */
+.login-pf-signup {
+  text-align: center;
+  margin-top: 0;
 }
 
-/* ---- Links ---- */
-#kc-info-wrapper a,
-.kc-back-link a,
-.login-pf a:not(.pf-v5-c-button) {
-  color: var(--text-link) !important;
-  font-size: 13px;
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-
-#kc-info-wrapper a:hover,
-.kc-back-link a:hover,
-.login-pf a:not(.pf-v5-c-button):hover {
-  color: var(--text-primary) !important;
-}
-
-/* ---- Info wrapper (register link area) ---- */
 #kc-info-wrapper {
   text-align: center;
   padding-top: 20px;
@@ -246,34 +246,57 @@ body.login-pf {
   color: var(--text-muted);
 }
 
-/* ---- Alerts / Feedback ---- */
-#kc-feedback {
-  margin-bottom: 16px;
+#kc-info-wrapper a {
+  color: var(--text-link) !important;
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.15s ease;
 }
 
-.pf-v5-c-alert {
+#kc-info-wrapper a:hover {
+  color: var(--text-primary) !important;
+}
+
+/* ---- Password visibility button ---- */
+.pf-c-button[data-password-toggle] {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-left: none;
+  color: var(--text-muted);
+  padding: 0 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.pf-c-button[data-password-toggle]:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ---- Alerts ---- */
+.pf-c-alert {
   border-radius: 8px;
   padding: 12px 16px;
   margin-bottom: 16px;
   border: none;
 }
 
-.pf-v5-c-alert.pf-m-danger {
-  background: rgba(245, 101, 101, 0.1);
-  color: var(--error);
+.pf-c-alert.pf-m-danger {
+  background: rgba(245, 101, 101, 0.1) !important;
+  color: var(--error) !important;
 }
 
-.pf-v5-c-alert.pf-m-success {
-  background: rgba(72, 187, 120, 0.1);
-  color: var(--success);
+.pf-c-alert.pf-m-success {
+  background: rgba(72, 187, 120, 0.1) !important;
+  color: var(--success) !important;
 }
 
-.pf-v5-c-alert.pf-m-info {
-  background: rgba(56, 178, 172, 0.1);
-  color: var(--accent);
+.pf-c-alert.pf-m-info {
+  background: rgba(56, 178, 172, 0.1) !important;
+  color: var(--accent) !important;
 }
 
-.pf-v5-c-alert__title {
+.pf-c-alert__title {
   font-size: 14px;
   font-weight: 500;
 }
@@ -293,25 +316,7 @@ body.login-pf {
   gap: 8px;
 }
 
-.kc-social-link {
-  display: block;
-}
-
-.kc-social-link .pf-v5-c-button {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 8px !important;
-  color: var(--text-primary) !important;
-  padding: 10px 16px !important;
-  font-size: 14px;
-  width: 100%;
-}
-
-.kc-social-link .pf-v5-c-button:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-}
-
-/* ---- Locale dropdown ---- */
+/* ---- Locale ---- */
 #kc-locale-dropdown {
   position: fixed;
   top: 16px;
@@ -324,7 +329,7 @@ body.login-pf {
   text-decoration: none;
 }
 
-/* ---- Logout confirmation page ---- */
+/* ---- Logout ---- */
 #kc-logout-confirm {
   text-align: center;
 }
@@ -338,11 +343,15 @@ body.login-pf {
 
 /* ---- Responsive ---- */
 @media (max-width: 640px) {
-  body.login-pf {
+  .login-pf-page {
     padding: 16px;
   }
 
-  #kc-content {
-    padding: 24px;
+  #kc-content-wrapper {
+    padding: 20px 24px 32px;
+  }
+
+  .login-pf-header {
+    padding: 32px 24px 0;
   }
 }
