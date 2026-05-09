@@ -1,5 +1,6 @@
 {
   "realm": "myawesomeapp",
+  "loginTheme": "myawesomeapp",
   "enabled": true,
   "sslRequired": "none",
   "registrationAllowed": true,
