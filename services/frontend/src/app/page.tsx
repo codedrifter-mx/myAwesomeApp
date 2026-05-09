@@ -84,17 +84,19 @@ export default function HomePage() {
         .hero-headline {
           font-size: clamp(40px, 6vw, 72px); letter-spacing: -0.04em;
           max-width: 800px; margin-bottom: 20px; line-height: 1;
-          text-shadow: 0 2px 16px rgba(0,0,0,0.5);
+          text-shadow: var(--frost-shadow, 0 2px 20px rgba(0,0,0,0.5));
         }
         .hero-deck {
           font-size: clamp(16px, 2vw, 20px); color: rgba(255,255,255,0.65);
           max-width: 560px; margin-bottom: 36px; line-height: 1.4;
-          text-shadow: 0 1px 12px rgba(0,0,0,0.4);
+          text-shadow: var(--frost-shadow, 0 2px 16px rgba(0,0,0,0.4));
         }
         .button-group { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
         .btn {
           padding: 14px 28px; border-radius: 9999px; font-size: 16px; font-weight: 500;
           text-decoration: none; transition: all 0.2s; display: inline-block;
+          text-shadow: var(--frost-shadow, 0 2px 20px rgba(0,0,0,0.5));
+          box-shadow: 0 0 0 0 rgba(56,178,172,0);
         }
         .btn-primary {
           background: #fff; color: #000; border: 1px solid #fff;

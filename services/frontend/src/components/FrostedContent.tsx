@@ -25,11 +25,9 @@ export default function FrostedContent({ children, className, style }: {
       const maxDist = Math.max(window.innerWidth, window.innerHeight) * 0.5;
       const t = Math.min(dist / maxDist, 1);
 
-      const blur = 10 - t * 8;
-      const opacity = 0.22 - t * 0.18;
-
-      el!.style.setProperty('--frost-blur', `${blur}px`);
-      el!.style.setProperty('--frost-bg', `rgba(0,0,0,${opacity})`);
+      el!.style.setProperty('--frost-blur', `blur(${(1 - t) * 14}px)`);
+      el!.style.setProperty('--frost-bg', `rgba(0,0,0,${(1 - t) * 0.35})`);
+      el!.style.setProperty('--frost-shadow', `0 ${2 + (1 - t) * 16}px ${4 + (1 - t) * 24}px rgba(0,0,0,${0.3 + (1 - t) * 0.4})`);
     };
 
     update({ clientX: window.innerWidth / 2, clientY: window.innerHeight / 2 } as MouseEvent);
@@ -44,8 +42,8 @@ export default function FrostedContent({ children, className, style }: {
       className={className}
       style={{
         ...style,
-        backdropFilter: 'var(--frost-blur, 6px)',
-        WebkitBackdropFilter: 'var(--frost-blur, 6px)',
+        backdropFilter: 'var(--frost-blur, blur(6px))',
+        WebkitBackdropFilter: 'var(--frost-blur, blur(6px))',
         background: 'var(--frost-bg, rgba(0,0,0,0.12))',
       }}
     >
