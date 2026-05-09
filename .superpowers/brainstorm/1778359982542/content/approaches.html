@@ -1,0 +1,45 @@
+<h2>How should we implement the theme?</h2>
+<p class="subtitle">Three approaches with different trade-offs</p>
+
+<div class="section">
+  <h3>Approach A: CSS-Only (Recommended) ⭐</h3>
+  <p>Override Keycloak's default theme CSS only. Uses existing FreeMarker templates but applies full myAwesomeApp styling via CSS. Fastest path.</p>
+  <div class="pros-cons">
+    <div class="pros"><h4>Pros</h4><ul><li>Quick to implement (~1 day)</li><li>Survives Keycloak upgrades</li><li>Low maintenance</li></ul></div>
+    <div class="cons"><h4>Cons</h4><ul><li>Limited HTML structure control</li><li>Can't add custom app header/footer</li></ul></div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Approach B: Full FreeMarker Templates</h3>
+  <p>Custom <code>.ftl</code> templates for login, register, and logout. Full control over HTML — can match the myAwesomeApp landing page structure exactly.</p>
+  <div class="pros-cons">
+    <div class="pros"><h4>Pros</h4><ul><li>Complete design control</li><li>Can replicate app's nav/header</li></ul></div>
+    <div class="cons"><h4>Cons</h4><ul><li>More verbose</li><li>May need updates when Keycloak changes template API</li><li>More to maintain</li></ul></div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Approach C: Hybrid — Custom Templates + CSS</h3>
+  <p>Override only the template wrappers (add app header/footer/background) but keep Keycloak's form markup. CSS handles the visual rest.</p>
+  <div class="pros-cons">
+    <div class="pros"><h4>Pros</h4><ul><li>Good balance of control and maintainability</li><li>Adds app branding elements</li></ul></div>
+    <div class="cons"><h4>Cons</h4><ul><li>Slightly more work than CSS-only</li><li>Partial template overrides</li></ul></div>
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top: 1.5rem;">Which approach should we go with?</p>
+<div class="options">
+  <div class="option" data-choice="css" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content"><h3>CSS-Only</h3><p>Lightweight, upgrade-safe</p></div>
+  </div>
+  <div class="option" data-choice="full" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content"><h3>Full Templates</h3><p>Complete design control</p></div>
+  </div>
+  <div class="option" data-choice="hybrid" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content"><h3>Hybrid</h3><p>Best balance</p></div>
+  </div>
+</div>

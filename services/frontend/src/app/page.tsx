@@ -66,6 +66,9 @@ export default function HomePage() {
           position: relative; z-index: 10; flex: 1;
           display: flex; flex-direction: column; align-items: center; justify-content: center;
           padding: 0 24px; text-align: center;
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
+          background: rgba(0,0,0,0.12);
         }
 
         /* Nav */
@@ -83,10 +86,12 @@ export default function HomePage() {
         .hero-headline {
           font-size: clamp(40px, 6vw, 72px); letter-spacing: -0.04em;
           max-width: 800px; margin-bottom: 20px; line-height: 1;
+          text-shadow: 0 2px 16px rgba(0,0,0,0.5);
         }
         .hero-deck {
           font-size: clamp(16px, 2vw, 20px); color: rgba(255,255,255,0.65);
           max-width: 560px; margin-bottom: 36px; line-height: 1.4;
+          text-shadow: 0 1px 12px rgba(0,0,0,0.4);
         }
         .button-group { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
         .btn {
