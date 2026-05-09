@@ -52,9 +52,49 @@
         "post.logout.redirect.uris": "http://localhost:3000/* https://myawesomeapp-production.up.railway.app/*"
       },
       "fullScopeAllowed": true
+    },
+    {
+      "clientId": "admin-cli",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "fullScopeAllowed": true,
+      "redirectUris": [],
+      "webOrigins": [
+        "http://localhost:3000",
+        "https://myawesomeapp-production.up.railway.app",
+        "+"
+      ],
+      "attributes": {}
     }
   ],
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Admin role for user management",
+        "composite": false
+      }
+    ]
+  },
   "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "email": "admin@myawesomeapp.dev",
+      "firstName": "Admin",
+      "lastName": "User",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["admin"]
+    },
     {
       "username": "demo",
       "enabled": true,

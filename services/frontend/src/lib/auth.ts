@@ -36,8 +36,9 @@ export async function fetchUserInfo(token: string): Promise<UserInfo | null> {
 
 export async function getAdminToken(): Promise<string | null> {
   const keycloakUrl = process.env.NEXT_PUBLIC_KEYCLOAK_URL || 'http://localhost:8080';
+  const realm = process.env.NEXT_PUBLIC_KEYCLOAK_REALM || 'myawesomeapp';
   try {
-    const res = await fetch(`${keycloakUrl}/realms/master/protocol/openid-connect/token`, {
+    const res = await fetch(`${keycloakUrl}/realms/${realm}/protocol/openid-connect/token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
