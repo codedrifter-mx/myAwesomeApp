@@ -68,6 +68,19 @@
         "+"
       ],
       "attributes": {}
+    },
+    {
+      "clientId": "realm-management",
+      "enabled": true,
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "fullScopeAllowed": true,
+      "redirectUris": [],
+      "webOrigins": [],
+      "attributes": {}
     }
   ],
   "roles": {
@@ -75,9 +88,21 @@
       {
         "name": "admin",
         "description": "Admin role for user management",
-        "composite": false
+        "composite": true,
+        "composites": {
+          "client": {
+            "realm-management": ["manage-users", "view-users", "query-users"]
+          }
+        }
       }
-    ]
+    ],
+    "client": {
+      "realm-management": [
+        { "name": "manage-users", "description": "${role_manage-users}" },
+        { "name": "view-users", "description": "${role_view-users}" },
+        { "name": "query-users", "description": "${role_query-users}" }
+      ]
+    }
   },
   "users": [
     {
