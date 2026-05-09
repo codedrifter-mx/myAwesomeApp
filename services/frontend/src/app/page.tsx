@@ -1,3 +1,7 @@
+import dynamic from 'next/dynamic';
+
+const VantaBackground = dynamic(() => import('@/components/VantaBackground'), { ssr: false });
+
 export default function HomePage() {
   const keycloakUrl = process.env.NEXT_PUBLIC_KEYCLOAK_URL || 'http://localhost:8080';
   const realm = process.env.NEXT_PUBLIC_KEYCLOAK_REALM || 'myawesomeapp';
@@ -157,6 +161,7 @@ export default function HomePage() {
 
       {/* === HERO === */}
       <section className="hero">
+        <VantaBackground />
         <div className="mesh-container">
           <div className="mesh-blob mesh-teal" />
           <div className="mesh-blob mesh-purple" />
