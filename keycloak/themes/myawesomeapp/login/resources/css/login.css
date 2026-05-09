@@ -3,7 +3,7 @@
   --card-bg: rgba(255, 255, 255, 0.04);
   --card-border: rgba(255, 255, 255, 0.06);
   --card-radius: 14px;
-  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-bg: #1a1a1a;
   --input-border: rgba(255, 255, 255, 0.1);
   --input-radius: 8px;
   --text-primary: #ffffff;
@@ -143,8 +143,8 @@ body {
   color: rgba(255, 255, 255, 0.25) !important;
 }
 
-input {
-  color-scheme: dark;
+.pf-c-form-control {
+  color-scheme: dark !important;
 }
 
 .pf-c-form-control:-webkit-autofill,
