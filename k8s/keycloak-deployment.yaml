@@ -40,7 +40,7 @@ spec:
             - name: KC_METRICS_ENABLED
               value: "true"
             - name: KC_SPI_THEME_DEFAULT
-              value: myawesomeapp
+              value: "myawesomeapp"
             - name: KC_DB
               value: "postgres"
             - name: KC_DB_URL
