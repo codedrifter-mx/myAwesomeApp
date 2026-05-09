@@ -75,6 +75,9 @@ export default function HomePage() {
         .nav {
           position: relative; z-index: 20; width: 100%;
           padding: 24px 40px; display: flex; justify-content: space-between; align-items: center;
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
+          background: rgba(0,0,0,0.12);
         }
         .logo { font-size: 24px; font-weight: 500; letter-spacing: -0.05em; color: #fff; }
         .nav-links { display: flex; gap: 32px; font-size: 14px; }
