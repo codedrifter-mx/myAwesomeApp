@@ -342,9 +342,22 @@ body {
 }
 
 /* ---- Register page cleanup ---- */
-.pf-c-form__label-required,
-.required {
+.subtitle {
   display: none;
+}
+
+#kc-register-form .form-group > .col-xs-12:first-child {
+  font-size: 0;
+}
+
+#kc-register-form .form-group > .col-xs-12:first-child .pf-c-form__label {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 6px;
 }
 
 #kc-back-link,
