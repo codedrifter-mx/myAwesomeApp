@@ -341,6 +341,21 @@ body {
   line-height: 1.5;
 }
 
+/* ---- Register page cleanup ---- */
+.pf-c-form__label-required,
+.required {
+  display: none;
+}
+
+#kc-back-link,
+.kc-back-link {
+  display: none;
+}
+
+#kc-form-options {
+  display: none;
+}
+
 /* ---- Responsive ---- */
 @media (max-width: 640px) {
   .login-pf-page {
