@@ -44,7 +44,21 @@ export default function DashboardPage() {
     setSaving(false);
   };
 
-  const handleLogout = () => { clearToken(); window.location.href = getKeycloakLogoutUrl(); };
+  const handleLogout = async () => {
+    clearToken();
+    try {
+      await fetch(getKeycloakLogoutUrl(), { credentials: 'include' });
+    } catch {}
+    window.location.href = '/';
+  };
+
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('logout_state') === 'done') {
+      sessionStorage.removeItem('access_token');
+      window.location.href = '/';
+    }
+  }, []);
 
   return (
     <>
