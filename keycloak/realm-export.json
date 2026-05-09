@@ -49,7 +49,7 @@
       ],
       "attributes": {
         "pkce.code.challenge.method": "S256",
-        "post.logout.redirect.uris": "http://localhost:3000/* https://myawesomeapp-production.up.railway.app/*"
+        "post.logout.redirect.uris": "http://localhost:3000/*,https://myawesomeapp-production.up.railway.app/*"
       },
       "fullScopeAllowed": true
     },
