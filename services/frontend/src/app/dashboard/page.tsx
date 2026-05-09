@@ -52,7 +52,7 @@ export default function DashboardPage() {
     window.location.href = '/';
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('logout_state') === 'done') {
       sessionStorage.removeItem('access_token');
