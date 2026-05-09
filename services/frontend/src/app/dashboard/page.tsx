@@ -44,13 +44,7 @@ export default function DashboardPage() {
     setSaving(false);
   };
 
-  const handleLogout = async () => {
-    clearToken();
-    try {
-      await fetch(getKeycloakLogoutUrl(), { credentials: 'include' });
-    } catch {}
-    window.location.href = '/';
-  };
+  const handleLogout = () => { clearToken(); window.location.href = getKeycloakLogoutUrl(); };
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);

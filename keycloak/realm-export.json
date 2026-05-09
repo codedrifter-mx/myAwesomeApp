@@ -39,8 +39,10 @@
       "redirectUris": [
         "http://localhost:3000/dashboard*",
         "http://localhost:3000/*",
+        "http://localhost:3000",
         "https://myawesomeapp-production.up.railway.app/dashboard*",
-        "https://myawesomeapp-production.up.railway.app/*"
+        "https://myawesomeapp-production.up.railway.app/*",
+        "https://myawesomeapp-production.up.railway.app"
       ],
       "webOrigins": [
         "http://localhost:3000",
@@ -49,7 +51,7 @@
       ],
       "attributes": {
         "pkce.code.challenge.method": "S256",
-        "post.logout.redirect.uris": "http://localhost:3000/*,https://myawesomeapp-production.up.railway.app/*"
+        "post.logout.redirect.uris": "http://localhost:3000,https://myawesomeapp-production.up.railway.app"
       },
       "fullScopeAllowed": true
     },

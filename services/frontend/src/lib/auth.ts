@@ -97,5 +97,11 @@ export function getStoredToken(): string | null {
 export function getKeycloakLogoutUrl(): string {
   const keycloakUrl = process.env.NEXT_PUBLIC_KEYCLOAK_URL || 'http://localhost:8080';
   const realm = process.env.NEXT_PUBLIC_KEYCLOAK_REALM || 'myawesomeapp';
-  return `${keycloakUrl}/realms/${realm}/protocol/openid-connect/logout`;
+  const clientId = process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID || 'myawesomeapp-frontend';
+  const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
+  const params = new URLSearchParams({
+    client_id: clientId,
+    post_logout_redirect_uri: frontendUrl,
+  });
+  return `${keycloakUrl}/realms/${realm}/protocol/openid-connect/logout?${params.toString()}`;
 }
