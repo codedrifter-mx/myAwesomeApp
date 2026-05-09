@@ -32,5 +32,5 @@ export default function VantaBackground() {
     };
   }, []);
 
-  return <div ref={ref} style={{ position: 'absolute', inset: 0, zIndex: -1 }} />;
+  return <div ref={ref} style={{ position: 'absolute', inset: 0, zIndex: 1 }} />;
 }
