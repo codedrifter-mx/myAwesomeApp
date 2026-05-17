@@ -1,4 +1,8 @@
-const AUTH_HEALTH_URL = process.env.AUTH_HEALTH_URL || 'http://keycloak:8080/health/ready';
+import { validateHealthEvent } from './schemas';
+
+function getAuthHealthUrl(): string {
+  return process.env.AUTH_HEALTH_URL || 'http://keycloak:8080/health/ready';
+}
 const LIVEOPS_EVENTS_URL = process.env.LIVEOPS_EVENTS_URL || 'http://liveops-backend:4000/api/events';
 const POLL_INTERVAL_MS = 5000;
 const FAILURE_THRESHOLD = 3;
@@ -8,9 +12,9 @@ let consecutiveSuccesses = 0;
 let isDown = false;
 let lastHealthyTime: string | null = null;
 
-async function checkHealth(): Promise<boolean> {
+export async function checkHealth(): Promise<boolean> {
   try {
-    const res = await fetch(AUTH_HEALTH_URL, { signal: AbortSignal.timeout(3000) });
+    const res = await fetch(getAuthHealthUrl(), { signal: AbortSignal.timeout(3000) });
     return res.ok;
   } catch {
     return false;
@@ -18,6 +22,11 @@ async function checkHealth(): Promise<boolean> {
 }
 
 async function pushEvent(event: object): Promise<void> {
+  const validation = validateHealthEvent(event);
+  if (!validation.valid) {
+    console.error('Invalid event schema, skipping push:', validation.errors);
+    return;
+  }
   try {
     await fetch(LIVEOPS_EVENTS_URL, {
       method: 'POST',
@@ -30,7 +39,7 @@ async function pushEvent(event: object): Promise<void> {
 }
 
 async function monitor(): Promise<void> {
-  console.log(`Health monitor started. Polling ${AUTH_HEALTH_URL} every ${POLL_INTERVAL_MS}ms`);
+  console.log(`Health monitor started. Polling ${getAuthHealthUrl()} every ${POLL_INTERVAL_MS}ms`);
 
   while (true) {
     const healthy = await checkHealth();
@@ -74,4 +83,6 @@ async function monitor(): Promise<void> {
   }
 }
 
-monitor().catch(console.error);
+if (process.env.NODE_ENV !== 'test') {
+  monitor().catch(console.error);
+}

@@ -1,8 +1,3 @@
-import dynamic from 'next/dynamic';
-import FrostedContent from '@/components/FrostedContent';
-
-const VantaBackground = dynamic(() => import('@/components/VantaBackground'), { ssr: false });
-
 export default function HomePage() {
   const keycloakUrl = process.env.NEXT_PUBLIC_KEYCLOAK_URL || 'http://localhost:8080';
   const realm = process.env.NEXT_PUBLIC_KEYCLOAK_REALM || 'myawesomeapp';
@@ -84,19 +79,15 @@ export default function HomePage() {
         .hero-headline {
           font-size: clamp(40px, 6vw, 72px); letter-spacing: -0.04em;
           max-width: 800px; margin-bottom: 20px; line-height: 1;
-          text-shadow: var(--frost-shadow, 0 2px 20px rgba(0,0,0,0.5));
         }
         .hero-deck {
           font-size: clamp(16px, 2vw, 20px); color: rgba(255,255,255,0.65);
           max-width: 560px; margin-bottom: 36px; line-height: 1.4;
-          text-shadow: var(--frost-shadow, 0 2px 16px rgba(0,0,0,0.4));
         }
         .button-group { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
         .btn {
           padding: 14px 28px; border-radius: 9999px; font-size: 16px; font-weight: 500;
           text-decoration: none; transition: all 0.2s; display: inline-block;
-          text-shadow: var(--frost-shadow, 0 2px 20px rgba(0,0,0,0.5));
-          box-shadow: 0 0 0 0 rgba(56,178,172,0);
         }
         .btn-primary {
           background: #fff; color: #000; border: 1px solid #fff;
@@ -166,7 +157,6 @@ export default function HomePage() {
 
       {/* === HERO === */}
       <section className="hero">
-        <VantaBackground />
         <div className="mesh-container">
           <div className="mesh-blob mesh-teal" />
           <div className="mesh-blob mesh-purple" />
@@ -174,15 +164,15 @@ export default function HomePage() {
         </div>
         <div className="hero-grid" />
 
-        <FrostedContent className="nav">
+        <nav className="nav">
           <div className="logo">myAwesomeApp</div>
           <div className="nav-links">
             <a href="#features">Features</a>
             <a href={loginUrl}>Log in</a>
           </div>
-        </FrostedContent>
+        </nav>
 
-        <FrostedContent className="hero-content-wrapper">
+        <div className="hero-content-wrapper">
           <div className="text-glow" />
           <h1 className="hero-headline">Manage subscriptions effortlessly.</h1>
           <p className="hero-deck">The enterprise-grade platform to scale your billing, reduce churn, and automate revenue operations.</p>
@@ -201,7 +191,7 @@ export default function HomePage() {
           </div>
 
           <p className="demo-hint">Demo: demo / demo</p>
-        </FrostedContent>
+        </div>
       </section>
 
       {/* === FEATURES === */}

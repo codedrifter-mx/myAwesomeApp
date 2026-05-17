@@ -4,4 +4,7 @@ dist/
 .env
 .env.local
 .env.*.local
-.superpowers/
+tmp-secret.yaml
+*.secret.yaml
+**/secrets.yaml
+tsconfig.tsbuildinfo

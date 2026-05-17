@@ -1,6 +1,5 @@
 {
   "realm": "myawesomeapp",
-  "loginTheme": "myawesomeapp",
   "enabled": true,
   "sslRequired": "none",
   "registrationAllowed": true,
@@ -23,6 +22,72 @@
     "clientRole": false
   },
   "requiredCredentials": ["password"],
+  "requiredActions": [
+    {
+      "alias": "webauthn-register",
+      "name": "WebAuthn Register",
+      "providerId": "webauthn-register",
+      "enabled": true,
+      "defaultAction": false,
+      "priority": 60
+    }
+  ],
+  "authenticationFlows": [
+    {
+      "alias": "WebAuthn Browser Flow",
+      "description": "Browser flow with WebAuthn passkey support",
+      "providerId": "basic-flow",
+      "topLevel": true,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "auth-cookie",
+          "requirement": "ALTERNATIVE",
+          "priority": 10,
+          "userSetupAllowed": false,
+          "autheticatorFlow": false
+        },
+        {
+          "authenticator": "identity-provider-redirector",
+          "requirement": "ALTERNATIVE",
+          "priority": 20,
+          "userSetupAllowed": false,
+          "autheticatorFlow": false
+        },
+        {
+          "requirement": "ALTERNATIVE",
+          "priority": 30,
+          "flowAlias": "WebAuthn Browser Flow - webauthn-ticket-sub",
+          "userSetupAllowed": false,
+          "autheticatorFlow": true
+        }
+      ]
+    },
+    {
+      "alias": "WebAuthn Browser Flow - webauthn-ticket-sub",
+      "description": "WebAuthn sub-flow with password fallback",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "webauthn-authenticator",
+          "requirement": "ALTERNATIVE",
+          "priority": 10,
+          "userSetupAllowed": false,
+          "autheticatorFlow": false
+        },
+        {
+          "authenticator": "auth-username-password-form",
+          "requirement": "ALTERNATIVE",
+          "priority": 20,
+          "userSetupAllowed": false,
+          "autheticatorFlow": false
+        }
+      ]
+    }
+  ],
+  "browserFlow": "WebAuthn Browser Flow",
   "otpPolicyType": "totp",
   "otpPolicyAlgorithm": "HmacSHA1",
   "otpPolicyInitialCounter": 0,
